@@ -1,6 +1,6 @@
 {
-  "name": "apply-job-test-app",
-  "version": "1.0.0",
+  "name": "sendMail-taxCalculation-contactList-project",
+  "version": "0.0.1",
   "description": "This is web service for sending mail, calculate personal tax and manage contact.",
   "main": "index.js",
   "author": "Krittikarn Verakalas",
