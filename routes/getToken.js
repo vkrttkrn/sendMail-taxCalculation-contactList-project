@@ -1,4 +1,5 @@
 "use strict";
+//This file use for get token to access other api.
 const Models = require("../models");
 const Joi = require("joi");
 const Boom = require("boom");

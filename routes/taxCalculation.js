@@ -1,5 +1,6 @@
 "use strict";
 
+//This file is use for calculate tax.
 const appConfig = require("../configs/app");
 const Joi = require("Joi");
 const taxCaculation = require("../libs/taxCalculator");
@@ -19,6 +20,7 @@ module.exports = [
         }),
       },
       handler: async (req, h) => {
+        //Destructuring for use netIncome.
         const { netIncome } = req.payload;
 
         //This object of tax step to calculate.
@@ -65,6 +67,7 @@ module.exports = [
           },
         ];
 
+        //taxCaculation is function for calculate tax. The function is require 2 parameter (net income, tax step).
         const result = taxCaculation(netIncome, taxStep);
 
         return result;

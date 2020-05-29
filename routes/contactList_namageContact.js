@@ -1,3 +1,4 @@
+"use strict";
 const Models = require("../models");
 const Joi = require("joi");
 const Boom = require("boom");
@@ -16,6 +17,7 @@ module.exports = [
         }),
       },
       handler: async (req, h) => {
+        //Find contact by contact id.
         const Contact = await Models.Contact.findAll(
           {
             where: { contact_id: req.params.id },
@@ -23,12 +25,14 @@ module.exports = [
           { raw: true }
         );
 
+        //If contact is not found webservice will return error not found.
         if (Contact.length <= 0) {
           return Boom.notFound(
             "Contact is not found with id: " + req.params.id
           );
         }
 
+        //Assign new object with custom property and parsing phone, email and url to JSON.
         const resObj = await Contact.map((Contact) => {
           return Object.assign(
             {},
@@ -37,12 +41,15 @@ module.exports = [
               name: Contact.name,
               lastname: Contact.lastname,
               birthdate: Contact.birthdate,
+              groupId: Contact.group_id,
               phone: JSON.parse(Contact.phone),
               email: JSON.parse(Contact.email),
               url: JSON.parse(Contact.url),
             }
           );
         });
+
+        //Return object.
         return resObj;
       },
     },
@@ -79,6 +86,7 @@ module.exports = [
         }),
       },
       handler: async (req, h) => {
+        //Insert contact and parsing phone, email and url to JSON string.
         const Contact = await Models.Contact.create({
           name: req.payload.name,
           lastname: req.payload.lastname,
@@ -89,10 +97,12 @@ module.exports = [
           url: JSON.stringify(req.payload.url),
         });
 
+        //If webservice can't insert it will return error bad request.
         if (Contact == null) {
           return Boom.badRequest("Cannot create a contact");
         }
 
+        //Return contact name.
         return h.response("Created contact: " + Contact.name);
       },
     },
@@ -130,12 +140,17 @@ module.exports = [
         }),
       },
       handler: async (req, h) => {
+        //Find contact by primary key.
         const Contact = await Models.Contact.findByPk(req.payload.id);
+
+        //If contact is not found webservice will return error bad request.
         if (Contact == null) {
           return Boom.notFound(
             "Contact is not found with id: " + req.payload.id
           );
         }
+
+        //If found contact it will update.
         await Contact.update(
           {
             name: req.payload.name,
@@ -152,6 +167,8 @@ module.exports = [
             },
           }
         );
+
+        //Return contact name.
         return h.response("Edited contact: " + Contact.name);
       },
     },
@@ -170,6 +187,7 @@ module.exports = [
         }),
       },
       handler: async (req, h) => {
+        //Find contact by contact id
         const Contact = await Models.Contact.findAll(
           {
             where: { contact_id: req.payload.id },
@@ -177,18 +195,21 @@ module.exports = [
           { raw: true }
         );
 
+        //If contact is not found it will return error not found.
         if (Contact.length <= 0) {
           return Boom.notFound(
             "Contact is not found with id: " + req.payload.id
           );
         }
 
+        //If previous condition is not working it will delete.
         Models.Contact.destroy({
           where: {
             contact_id: req.payload.id,
           },
         });
 
+        //Return delete message.
         return h.response("Contact deleted.");
       },
     },

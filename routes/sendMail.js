@@ -1,5 +1,6 @@
 "use strict";
 
+//This file use for send mail with sendgrid service.
 const sendGrid = require("@sendgrid/mail");
 const appConfig = require("../configs/app");
 const Joi = require("Joi");

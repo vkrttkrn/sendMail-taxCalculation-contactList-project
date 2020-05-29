@@ -1,11 +1,9 @@
+"use strict";
 module.exports = (totalIncome, taxStep) => {
   //This line is filter for use step that totalIncome can calculate.
   const totalStep = taxStep.filter(
     (taxStep) => taxStep.initValue <= totalIncome
   );
-
-  //This line is calculate tax.
-  const result = totalStep.reduce(calStep, 0);
 
   const calStep = (ret, e, i) => {
     let devideValue = 0;
@@ -41,6 +39,9 @@ module.exports = (totalIncome, taxStep) => {
     //return value after calculate for next step or if is last step value will return data out.
     return ((devideValue - e.initValue) * e.percent) / 100 + ret;
   };
+
+  //This line is calculate tax.
+  const result = totalStep.reduce(calStep, 0);
 
   console.log(totalStep);
   console.log(result);
