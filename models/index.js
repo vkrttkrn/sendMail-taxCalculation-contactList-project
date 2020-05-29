@@ -33,16 +33,4 @@ db.Group.hasMany(db.Contact, {
   foreignKey: "group_id",
 });
 
-db.Contact.hasMany(db.Email, {
-  foreignKey: "contact_id",
-});
-
-db.Contact.hasMany(db.Phone, {
-  foreignKey: "contact_id",
-});
-
-db.Contact.hasMany(db.Url, {
-  foreignKey: "contact_id",
-});
-
 module.exports = db;

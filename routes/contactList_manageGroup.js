@@ -178,7 +178,7 @@ module.exports = [
           },
         });
 
-        return h.response("Deleted group.");
+        return h.response("Group deleted.");
       },
     },
   },

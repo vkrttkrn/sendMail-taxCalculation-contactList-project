@@ -15,11 +15,23 @@ module.exports = function (sequelize, DataTypes) {
       },
       lastname: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       birthdate: {
-        type: DataTypes.DATE,
-        allowNull: false,
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      phone: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+      },
+      email: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+      },
+      url: {
+        type: DataTypes.TEXT,
+        allowNull: true,
       },
       group_id: {
         type: DataTypes.BIGINT,
